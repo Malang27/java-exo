@@ -6,6 +6,15 @@ public class ExerciseRunner {
         df.setFormat("dd.MM.yyyy");
         System.out.println(df.getFormattedDate());
 
+        df.setFormat("dd.mm.yyyy");
+        System.out.println(df.getFormattedDate());
+
+        df.setFormat("dd month yyyy");
+        System.out.println(df.getFormattedDate());
+
+        df.setFormat("dd/mm/yyyy");
+        System.out.println(df.getFormattedDate());
+
         df.setDate(1672531200);
         System.out.println(df.getFormattedDate());
 

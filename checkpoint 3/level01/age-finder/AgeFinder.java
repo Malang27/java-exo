@@ -7,16 +7,12 @@ import java.time.format.DateTimeParseException;
 public class AgeFinder {
     public int calculateAge(String date) {
         try {
-            // Analyse la date donnée au format "yyyy-MM-dd" pour créer un objet LocalDate
-            LocalDate birthdayDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            LocalDate dateNow = LocalDate.now();
-            // Vérifie si la date de naissance est postérieure à la date actuelle
-            if(birthdayDate.isAfter(dateNow)){
+            LocalDate bd = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate datenow = LocalDate.now();
+            if (bd.isAfter(datenow)) {
                 return -1;
             }
-            // Calcule la période entre la date de naissance et la date actuelle
-            Period age = Period.between(birthdayDate, dateNow);
-            // Retourne l'âge en années
+            Period age = Period.between(bd, datenow);
             return age.getYears();
         } catch (DateTimeParseException e) {
             return -1;
