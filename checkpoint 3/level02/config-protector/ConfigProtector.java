@@ -4,17 +4,23 @@ import java.util.regex.Pattern;
 
 public class ConfigProtector {
     public String hideSensitiveData(String configFile, List<String> sensitiveKeys) {
-        // Implementation to hide sensitive data in the configuration file using regex
-        for(String key: sensitiveKeys) {
-            String regex = key+ "=.*";
+        if (configFile.isEmpty()) {
+            return configFile;
+        }
+        StringBuilder result = new StringBuilder(configFile);
+        for (String key : sensitiveKeys) {
+            String regex = key + "=([^\\n]*)";
             Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(configFile);
-            if(matcher.find()) {
-                String sensitive = matcher.group();
-                String hiden = sensitive.replaceAll("=.*","=******");
-                configFile = configFile.replace(sensitive, hiden);
+            Matcher matcher = pattern.matcher(result);
+            int offset = 0;
+            while (matcher.find()) {
+                int startValue = matcher.start(1) + offset;
+                int endValue = matcher.end(1) + offset;
+                String value = result.substring(startValue, endValue);
+                String masked = "*".repeat(value.length());
+                result.replace(startValue, endValue, masked);
             }
         }
-        return configFile;
+        return result.toString();
     }
 }
